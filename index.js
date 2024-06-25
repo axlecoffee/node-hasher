@@ -29,9 +29,13 @@ fs.readdir(inputDir, (err, files) => {
         const sha256 = hash.digest('hex');
 
         hashes.push(`${file}: ${sha256}`);
-
+        fs.appendFile(path.join(outputDir, 'hashes.txt'), `${sha256}\n`, (err) => {
+            if (err) {
+              console.error(err);
+            }
+        })
         // Write the hashes to the file as they are generated
-        fs.appendFile(path.join(outputDir, 'hashes.txt'), `${file}: ${sha256}\n`, (err) => {
+        fs.appendFile(path.join(outputDir, 'hashes-with-names.txt'), `${file}: ${sha256}\n`, (err) => {
           if (err) {
             console.error(err);
           }
